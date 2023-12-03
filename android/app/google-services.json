@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007940732214",
+    "project_id": "spendwise-27d5d",
+    "storage_bucket": "spendwise-27d5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007940732214:android:c8870becda4951e2931f97",
+        "android_client_info": {
+          "package_name": "com.example.spendwise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAncGmv1Ti5y8gO3jbekVa3mhIVyMGB8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
