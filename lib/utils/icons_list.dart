@@ -16,17 +16,17 @@ class AppIcons {
       "icon": FontAwesomeIcons.utensils,
     },
     {
-      "name": "Entertainment",
+      "name": "Entertain",
       "icon": FontAwesomeIcons.heart,
     },
-    {"name": "Transportation", "icon": FontAwesomeIcons.car},
+    {"name": "Transport", "icon": FontAwesomeIcons.car},
     {"name": "Health", "icon": FontAwesomeIcons.kitMedical},
     {"name": "Education", "icon": FontAwesomeIcons.book},
     {"name": "Pets", "icon": FontAwesomeIcons.dog},
     {"name": "Home", "icon": FontAwesomeIcons.house},
     {"name": "Gifts", "icon": FontAwesomeIcons.gift},
     {"name": "Other", "icon": FontAwesomeIcons.dollarSign},
-    {"name": "Miscellaneous", "icon": FontAwesomeIcons.circle},
+    {"name": "Miscel", "icon": FontAwesomeIcons.circle},
   ];
   IconData getExpenseCategoryIcons(String categoryName) {
     final category = homeExpensesCategories.firstWhere(

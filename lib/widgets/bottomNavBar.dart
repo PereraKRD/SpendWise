@@ -29,19 +29,13 @@ class NavBar extends StatelessWidget {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Badge(
-              child: Icon(Icons.notifications_sharp, color: Colors.white),
-              backgroundColor: TColor.notificationActive,
-            ),
-            label: 'Notifications',
+            icon: Icon(Icons.monetization_on, color: Colors.white),
+            label: 'Transactions',
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('2', style: TextStyle(color: Colors.black)),
-              child: Icon(Icons.messenger_sharp, color: Colors.white),
-              backgroundColor: TColor.notificationActive,
-            ),
-            label: 'Messages',
+            selectedIcon: Icon(Icons.person),
+            icon: Icon(Icons.person_outlined, color: Colors.white),
+            label: 'Profile',
           ),
         ],
       ),
