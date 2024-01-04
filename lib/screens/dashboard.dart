@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/log_in.dart';
 import 'package:spendwise/screens/Home_Screen.dart';
+import 'package:spendwise/screens/profile_page.dart';
 import 'package:spendwise/screens/transaction_screen.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/widgets/bottomNavBar.dart';
@@ -17,6 +18,7 @@ class _DashboardState extends State<Dashboard> {
   var pageViewList = [
     HomeScreen(),
     TransactionScreen(),
+    Profile_Page(),
   ];
 
   var isLogoutLoader = false;

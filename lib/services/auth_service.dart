@@ -5,7 +5,7 @@ import 'package:spendwise/services/db.dart';
 
 class AuthService {
   var db = Db();
-  createUser(data, context) async {
+  Future<void> createUser(data, context) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: data['email'], password: data['password']);
@@ -28,7 +28,7 @@ class AuthService {
     }
   }
 
-  loginUser(data, context) async {
+  Future<void> loginUser(data, context) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: data['email'], password: data['password']);

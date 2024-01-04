@@ -13,28 +13,49 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        topRight: Radius.circular(20.0),
+        topLeft: Radius.circular(30.0),
+        topRight: Radius.circular(30.0),
       ),
       child: NavigationBar(
         backgroundColor: TColor.primary,
         selectedIndex: selectedIndex,
         onDestinationSelected: onDestinationSelected,
-        indicatorColor: TColor.secondary,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined, color: Colors.white),
+            selectedIcon: Icon(
+              Icons.home,
+              size: 35,
+            ),
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.white,
+              size: 35,
+            ),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.monetization_on, color: Colors.white),
+            selectedIcon: Icon(
+              Icons.monetization_on_outlined,
+              size: 35,
+            ),
+            icon: Icon(
+              Icons.monetization_on,
+              color: Colors.white,
+              size: 35,
+            ),
             label: 'Transactions',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_outlined, color: Colors.white),
+            selectedIcon: Icon(
+              Icons.person,
+              size: 35,
+            ),
+            icon: Icon(
+              Icons.person_outlined,
+              color: Colors.white,
+              size: 35,
+            ),
             label: 'Profile',
           ),
         ],

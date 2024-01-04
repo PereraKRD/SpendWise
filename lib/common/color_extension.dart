@@ -7,4 +7,10 @@ class TColor {
   static Color get appBarBg => Colors.white;
   static Color get notificationActive => const Color(0xffFAAC38);
   static Color get blackColor => Colors.black;
+  static Color get gray => const Color(0xff0E0E12);
+
+  static Color get border => const Color(0xffCFCFFC);
+  static Color get primaryText => Colors.white;
+
+  static Color get white => Colors.white;
 }

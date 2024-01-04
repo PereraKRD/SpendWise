@@ -4,6 +4,7 @@ import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/widgets/HeroCard.dart';
 import 'package:spendwise/log_in.dart';
 import 'package:spendwise/services/auth_service.dart';
+import 'package:spendwise/widgets/HomeScreenAppBarText.dart';
 import 'package:spendwise/widgets/add_transaction.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +18,38 @@ class _HomeScreenState extends State<HomeScreen> {
   var isLogoutLoader = false;
   var authService = AuthService();
 
-  signOut() async {
+  confirmSignOut(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Confirm",
+              style: TextStyle(
+                  color: TColor.primary,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold)),
+          content: Text("Are you sure you want to sign out?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("No"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close the dialog
+                await performSignOut();
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  performSignOut() async {
     setState(() {
       isLogoutLoader = true;
     });
@@ -66,20 +98,17 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: TColor.secondary,
       ),
       appBar: AppBar(
-        title: const Align(
-          alignment: Alignment.bottomLeft,
-          child: Text(
-            "Hello,",
-            style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-        ),
+        title: Align(
+            alignment: Alignment.bottomLeft,
+            child: HomeCreenAppBarText(
+              userId: userID,
+            )),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {
-                signOut();
+                confirmSignOut(context);
               },
               icon: isLogoutLoader
                   ? const CircularProgressIndicator()
