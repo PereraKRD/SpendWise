@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/common_widgets/IconItemRow.dart';
@@ -24,26 +25,23 @@ class _Profile_PageState extends State<Profile_Page> {
     return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text("Confirm",
-              style: TextStyle(
-                  color: TColor.primary,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold)),
-          content: Text("Are you sure you want to sign out?"),
+        return CupertinoAlertDialog(
+          title: Text('Confirm Delete'),
+          content: Text('Are you sure you want to delete this transaction?'),
           actions: <Widget>[
-            TextButton(
+            CupertinoDialogAction(
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close the dialog
+                await performSignOut(); // Close the dialog
+                // Implement delete functionality here
+              },
+              child: Text('Yes'),
+            ),
+            CupertinoDialogAction(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text("No"),
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop(); // Close the dialog
-                await performSignOut();
-              },
-              child: Text("Yes"),
+              child: Text('No'),
             ),
           ],
         );
