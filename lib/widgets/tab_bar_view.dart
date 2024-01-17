@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/widgets/TransactionListForTabs.dart';
 
-class Tabbar_View extends StatelessWidget {
-  const Tabbar_View(
-      {super.key, required this.category, required this.monthYear});
+class Tabbar_View extends StatefulWidget {
+  Tabbar_View({super.key, required this.category, required this.monthYear});
   final String category;
   final String monthYear;
+
+  @override
+  State<Tabbar_View> createState() => _Tabbar_ViewState();
+}
+
+class _Tabbar_ViewState extends State<Tabbar_View> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,14 +28,14 @@ class Tabbar_View extends StatelessWidget {
             child: TabBarView(
               children: [
                 TranscationListForTab(
-                  category: category,
+                  category: widget.category,
                   type: 'Expense',
-                  monthYear: monthYear,
+                  monthYear: widget.monthYear,
                 ),
                 TranscationListForTab(
-                  category: category,
+                  category: widget.category,
                   type: 'Income',
-                  monthYear: monthYear,
+                  monthYear: widget.monthYear,
                 ),
               ],
             ),

@@ -2,14 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 
-class ProfileUserData extends StatelessWidget {
+class ProfileUserData extends StatefulWidget {
   const ProfileUserData({super.key, required this.userId});
   final String userId;
 
   @override
+  State<ProfileUserData> createState() => _ProfileUserDataState();
+}
+
+class _ProfileUserDataState extends State<ProfileUserData> {
+  @override
   Widget build(BuildContext context) {
-    final Stream<DocumentSnapshot> _usersStream =
-        FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+    final Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .snapshots();
     return StreamBuilder<DocumentSnapshot>(
       stream: _usersStream,
       builder:
@@ -29,14 +36,14 @@ class ProfileUserData extends StatelessWidget {
 
         return ProfileCard(
           data: data,
-          userId: userId,
+          userId: widget.userId,
         );
       },
     );
   }
 }
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({
     super.key,
     required this.data,
@@ -45,17 +52,40 @@ class ProfileCard extends StatelessWidget {
   final Map data;
   final String userId;
 
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  late TextEditingController usernameController;
+  late TextEditingController budgetController;
+
+  @override
+  void initState() {
+    super.initState();
+    usernameController = TextEditingController(text: widget.data['username']);
+    budgetController =
+        TextEditingController(text: widget.data['budget'].toString());
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    budgetController.dispose();
+    super.dispose();
+  }
+
   void _showEditProfileDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         TextEditingController usernameController =
-            TextEditingController(text: data['username']);
-        TextEditingController phoneNumberController =
-            TextEditingController(text: data['phone']);
+            TextEditingController(text: widget.data['username']);
+        TextEditingController budgetController =
+            TextEditingController(text: widget.data['budget'].toString());
 
         return AlertDialog(
-          title: Text('Edit Profile'),
+          title: Text('Edit Budget'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +96,8 @@ class ProfileCard extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 TextField(
-                  controller: phoneNumberController,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  controller: budgetController,
+                  decoration: InputDecoration(labelText: 'Budget'),
                 ),
               ],
             ),
@@ -81,9 +111,12 @@ class ProfileCard extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
+                // Convert budgetController.text to an integer
+                int newBudget = int.parse(budgetController.text.trim());
+
                 _updateProfile(
                   usernameController.text.trim(),
-                  phoneNumberController.text.trim(),
+                  newBudget,
                 );
                 Navigator.of(context).pop();
               },
@@ -96,18 +129,19 @@ class ProfileCard extends StatelessWidget {
   }
 
 // Function to update the profile data
-  void _updateProfile(String newUsername, String newPhoneNumber) {
-    // Check if any of the fields are not empty before updating
-    if (newUsername.isNotEmpty || newPhoneNumber.isNotEmpty) {
-      FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'username': newUsername,
-        'phone': newPhoneNumber,
-      }).then((_) {
-        // Handle successful update
-      }).catchError((error) {
-        // Handle error
-        print('Failed to update profile: $error');
-      });
+  void _updateProfile(String newUsername, int newBudget) {
+    if (newUsername.isNotEmpty && !newBudget.isNegative) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.userId)
+          .update({
+            'username': newUsername,
+            'budget': newBudget,
+          })
+          .then((_) {})
+          .catchError((error) {
+            print('Failed to update profile: $error');
+          });
     }
   }
 
@@ -135,7 +169,7 @@ class ProfileCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "${data['username']}",
+              "${widget.data['username']}",
               style: TextStyle(
                   color: TColor.blackColor,
                   fontSize: 15,
@@ -150,7 +184,7 @@ class ProfileCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "${data['email']}",
+              "${widget.data['email']}",
               style: TextStyle(
                   color: TColor.primary.withOpacity(0.5),
                   fontSize: 12,
@@ -176,7 +210,7 @@ class ProfileCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
-              "Edit profile",
+              "Edit Budget",
               style: TextStyle(
                   color: TColor.white,
                   fontSize: 12,

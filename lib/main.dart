@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/firebase_options.dart';
 import 'package:spendwise/widgets/auth_gate.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         );
       },
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: TColor.primary),
         useMaterial3: true,
       ),
       home: const AuthGate(),

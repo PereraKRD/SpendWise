@@ -31,7 +31,7 @@ class _TimeLineWithMonthState extends State<TimeLineWithMonth> {
 
   scrollToSelectedMonth() {
     final selectedMonthIndex = months.indexOf(currentMonth);
-    if (selectedMonthIndex != -1) {
+    if (selectedMonthIndex != -1 && scrollController.hasClients) {
       final scrollOffset = (selectedMonthIndex * 100.0) - 150;
       scrollController.animateTo(scrollOffset,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);

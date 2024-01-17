@@ -3,17 +3,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/widgets/TransacctionList.dart';
 
-class TranscationListForTab extends StatelessWidget {
+class TranscationListForTab extends StatefulWidget {
   TranscationListForTab(
       {super.key,
       required this.category,
       required this.type,
       required this.monthYear});
 
-  final userId = FirebaseAuth.instance.currentUser!.uid;
   final String category;
   final String type;
   final String monthYear;
+
+  @override
+  State<TranscationListForTab> createState() => _TranscationListForTabState();
+}
+
+class _TranscationListForTabState extends State<TranscationListForTab> {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +28,11 @@ class TranscationListForTab extends StatelessWidget {
         .doc(userId)
         .collection('transactions')
         .orderBy('createdAt', descending: true)
-        .where('monthyear', isEqualTo: monthYear)
-        .where('type', isEqualTo: type);
+        .where('monthyear', isEqualTo: widget.monthYear)
+        .where('type', isEqualTo: widget.type);
 
-    if (category != 'All') {
-      query = query.where('category', isEqualTo: category);
+    if (widget.category != 'All') {
+      query = query.where('category', isEqualTo: widget.category);
     }
     return FutureBuilder<QuerySnapshot>(
       future: query.limit(150).get(),
@@ -46,6 +52,7 @@ class TranscationListForTab extends StatelessWidget {
             itemBuilder: (context, index) {
               var cardData = data[index];
               return TransactionList(
+                userId: userId,
                 data: cardData,
               );
             });

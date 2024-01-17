@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spendwise/log_in.dart';
 import 'package:spendwise/screens/dashboard.dart';
 import 'package:spendwise/services/db.dart';
 
@@ -12,19 +13,33 @@ class AuthService {
       await db.addUser(data, context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: ((context) => const Dashboard()),
+          builder: ((context) => const LogInView()),
         ),
       );
     } catch (e) {
+      String errorMessage = "An error occurred";
+      if (e is FirebaseAuthException) {
+        errorMessage = _getFirebaseAuthErrorMessage(e);
+      }
+
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text("Error"),
-            content: Text(e.toString()),
+            content: Text(errorMessage),
           );
         },
       );
+    }
+  }
+
+  String _getFirebaseAuthErrorMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case '':
+        return "Invalid email";
+      default:
+        return "Invalid credentials";
     }
   }
 
@@ -39,12 +54,17 @@ class AuthService {
         ),
       );
     } catch (e) {
+      String errorMessage = "An error occurred";
+      if (e is FirebaseAuthException) {
+        errorMessage = _getFirebaseAuthErrorMessage(e);
+      }
+
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text("Error"),
-            content: Text(e.toString()),
+            content: Text(errorMessage),
           );
         },
       );

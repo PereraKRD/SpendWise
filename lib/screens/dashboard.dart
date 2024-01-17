@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spendwise/log_in.dart';
 import 'package:spendwise/screens/home_Screen.dart';
 import 'package:spendwise/screens/profile_Screen.dart';
 import 'package:spendwise/screens/transaction_screen.dart';
-import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/widgets/bottomNavBar.dart';
 
 class Dashboard extends StatefulWidget {
@@ -20,24 +18,6 @@ class _DashboardState extends State<Dashboard> {
     TransactionScreen(),
     Profile_Page(),
   ];
-
-  var isLogoutLoader = false;
-  var authService = AuthService();
-
-  signOut() async {
-    setState(() {
-      isLogoutLoader = true;
-    });
-    await authService.signOutUser();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: ((context) => const LogInView()),
-      ),
-    );
-    setState(() {
-      isLogoutLoader = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

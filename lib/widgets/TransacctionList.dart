@@ -1,22 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/utils/icons_list.dart';
+import 'package:spendwise/widgets/edit_transaction.dart';
 
-class TransactionList extends StatelessWidget {
+class TransactionList extends StatefulWidget {
   TransactionList({
     super.key,
     required this.data,
+    required this.userId,
   });
   final dynamic data;
+  final String userId;
 
+  @override
+  State<TransactionList> createState() => _TransactionListState();
+}
+
+class _TransactionListState extends State<TransactionList> {
   var appIcon = AppIcons();
+
+  _dialoBuilder(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Center(
+                child: Text(
+              "Edit Transaction",
+              style: TextStyle(
+                  color: TColor.primary,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            )),
+            content: editTransactionForm(),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.fromMillisecondsSinceEpoch(data['createdAt']);
+    DateTime date =
+        DateTime.fromMillisecondsSinceEpoch(widget.data['createdAt']);
     String formatedDate = DateFormat('d MMM hh:mm a').format(date);
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
     return Container(
       child: CupertinoContextMenu.builder(
         actions: <Widget>[
@@ -33,14 +63,13 @@ class TransactionList extends StatelessWidget {
                     actions: <Widget>[
                       CupertinoDialogAction(
                         onPressed: () {
-                          Navigator.pop(context); // Close the dialog
-                          // Implement edit functionality here
+                          _dialoBuilder(context);
                         },
                         child: Text('Yes'),
                       ),
                       CupertinoDialogAction(
                         onPressed: () {
-                          Navigator.pop(context); // Close the dialog
+                          Navigator.pop(context);
                         },
                         child: Text('No'),
                       ),
@@ -64,15 +93,47 @@ class TransactionList extends StatelessWidget {
                         'Are you sure you want to delete this transaction?'),
                     actions: <Widget>[
                       CupertinoDialogAction(
-                        onPressed: () {
-                          Navigator.pop(context); // Close the dialog
-                          // Implement delete functionality here
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          int remainingAmount = widget.data['remainingAmount'];
+                          int totalExpenses = widget.data['totalExpenses'];
+                          int totalIncomes = widget.data['totalIncomes'];
+                          int amount = widget.data['amount'];
+
+                          if (widget.data['type'] == 'Income') {
+                            remainingAmount -= amount;
+                            totalIncomes -= amount;
+                          } else {
+                            remainingAmount += amount;
+                            totalExpenses -= amount;
+                          }
+
+                          Navigator.pop(context);
+
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(widget.userId)
+                              .collection('transactions')
+                              .doc(widget.data['id'])
+                              .delete();
+
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(widget.userId)
+                              .update({
+                            'remainingAmount': remainingAmount,
+                            'totalExpenses': totalExpenses,
+                            'totalIncomes': totalIncomes,
+                            'updatedAt': timestamp,
+                          });
+
+                          setState(() {});
                         },
                         child: Text('Yes'),
                       ),
                       CupertinoDialogAction(
                         onPressed: () {
-                          Navigator.pop(context); // Close the dialog
+                          Navigator.pop(context);
                         },
                         child: Text('No'),
                       ),
@@ -84,6 +145,13 @@ class TransactionList extends StatelessWidget {
             isDestructiveAction: true,
             trailingIcon: CupertinoIcons.delete,
             child: const Text('Delete'),
+          ),
+          CupertinoContextMenuAction(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            trailingIcon: CupertinoIcons.xmark_circle,
+            child: const Text('Cancel'),
           ),
         ],
         builder: (BuildContext context, Animation<double> animation) {
@@ -103,17 +171,20 @@ class TransactionList extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: data['type'] == 'Expense'
-                              ? Color(0xffFFE5F3)
-                              : Color.fromARGB(255, 229, 255,
-                                  250), //data['type'] Color(0xffFFE5F3),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Center(
-                          child: FaIcon(appIcon.getExpenseCategoryIcons(
-                              "${data['category']}")))),
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: widget.data['type'] == 'Expense'
+                            ? Color(0xffFFE5F3)
+                            : Color.fromARGB(255, 229, 255, 250),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Center(
+                      child: FaIcon(
+                        appIcon.getExpenseCategoryIcons(
+                            "${widget.data['category']}"),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     width: 15,
                   ),
@@ -126,7 +197,7 @@ class TransactionList extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${data['title']}",
+                                "${widget.data['title']}",
                                 maxLines: 1,
                                 style: TextStyle(
                                     color: Color(0xff5C5C5C),
@@ -134,10 +205,10 @@ class TransactionList extends StatelessWidget {
                                     fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                "${data['type'] == 'Expense' ? '-' : '+'} ${data['amount']}",
+                                "${widget.data['type'] == 'Expense' ? '-' : '+'} ${widget.data['amount']}",
                                 maxLines: 1,
                                 style: TextStyle(
-                                    color: data['type'] == 'Expense'
+                                    color: widget.data['type'] == 'Expense'
                                         ? Colors.red
                                         : Color(0xff02C487),
                                     fontSize: 18,
@@ -157,7 +228,7 @@ class TransactionList extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${data['remainingAmount']}",
+                                "${widget.data['remainingAmount']}",
                                 maxLines: 1,
                                 style: TextStyle(
                                   color: Color(0xff5C5C5C),

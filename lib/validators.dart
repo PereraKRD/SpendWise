@@ -21,17 +21,16 @@ class AppValidators {
     return null;
   }
 
-  String? validatePhone(String? value) {
+  String? validateBudget(String? value) {
+    // Budget should be positive and greater than zero and a number
     if (value == null || value.isEmpty) {
-      return 'Please enter some text';
+      return 'Please enter a value';
     }
-    if (value.length < 10) {
-      return 'Phone number must be at least 10 characters';
+    if (double.tryParse(value) == null) {
+      return 'Please enter a valid number';
     }
-    //phone number should only contain numbers
-    RegExp phoneRegex = RegExp(r'^[0-9]+$');
-    if (!phoneRegex.hasMatch(value)) {
-      return 'Phone number should only contain numbers';
+    if (double.parse(value) <= 0) {
+      return 'Budget should be greater than zero';
     }
     return null;
   }

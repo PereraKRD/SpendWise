@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/widgets/TransactionCard.dart';
 
-class HeroCard extends StatelessWidget {
+class HeroCard extends StatefulWidget {
   HeroCard({
     super.key,
     required this.userId,
@@ -11,9 +11,16 @@ class HeroCard extends StatelessWidget {
   final String userId;
 
   @override
+  State<HeroCard> createState() => _HeroCardState();
+}
+
+class _HeroCardState extends State<HeroCard> {
+  @override
   Widget build(BuildContext context) {
-    final Stream<DocumentSnapshot> _usersStream =
-        FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+    final Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .snapshots();
     return StreamBuilder<DocumentSnapshot>(
       stream: _usersStream,
       builder:
@@ -39,13 +46,18 @@ class HeroCard extends StatelessWidget {
   }
 }
 
-class Card extends StatelessWidget {
+class Card extends StatefulWidget {
   const Card({
     super.key,
     required this.data,
   });
   final Map data;
 
+  @override
+  State<Card> createState() => _CardState();
+}
+
+class _CardState extends State<Card> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,14 +80,14 @@ class Card extends StatelessWidget {
             child: Column(
               children: [
                 const Text(
-                  "Total Balance (Rs)",
+                  "Remaining Budget (Rs)",
                   style: TextStyle(
                       color: Color(0xff958BCE),
                       fontSize: 22,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${data['remainingAmount']}",
+                  "${widget.data['remainingAmount']}",
                   style: TextStyle(
                       color: TColor.primary,
                       fontSize: 45,
@@ -92,7 +104,7 @@ class Card extends StatelessWidget {
           Row(
             children: [
               CardOne(
-                amount: "${data['totalIncomes']}",
+                amount: "${widget.data['totalIncomes']}",
                 heading: "Income",
                 fontcolor: Color(0xff02C487),
               ),
@@ -100,7 +112,7 @@ class Card extends StatelessWidget {
                 width: 15,
               ),
               CardOne(
-                amount: "${data['totalExpenses']}",
+                amount: "${widget.data['totalExpenses']}",
                 heading: "Expense",
                 fontcolor: Color(0xffFC6158),
               ),
@@ -118,7 +130,7 @@ class Card extends StatelessWidget {
   }
 }
 
-class CardOne extends StatelessWidget {
+class CardOne extends StatefulWidget {
   CardOne({
     super.key,
     required this.fontcolor,
@@ -130,12 +142,17 @@ class CardOne extends StatelessWidget {
   final String amount;
 
   @override
+  State<CardOne> createState() => _CardOneState();
+}
+
+class _CardOneState extends State<CardOne> {
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: fontcolor.withOpacity(0.1),
+          color: widget.fontcolor.withOpacity(0.1),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child: Column(
@@ -145,25 +162,27 @@ class CardOne extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${heading}(Rs)",
+                  "${widget.heading}(Rs)",
                   style: TextStyle(
                       color: Color(0xff958BCE),
                       fontSize: 16,
                       fontWeight: FontWeight.w700),
                 ),
                 Icon(
-                  heading == "Income"
+                  widget.heading == "Income"
                       ? Icons.arrow_drop_up_outlined
                       : Icons.arrow_drop_down_outlined,
-                  color: fontcolor.withOpacity(0.5),
+                  color: widget.fontcolor.withOpacity(0.5),
                   size: 30,
                 )
               ],
             ),
             Text(
-              "${amount}",
+              "${widget.amount}",
               style: TextStyle(
-                  color: fontcolor, fontSize: 25, fontWeight: FontWeight.w700),
+                  color: widget.fontcolor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),

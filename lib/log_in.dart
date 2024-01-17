@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/constants.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/sign_up.dart';
@@ -48,38 +49,33 @@ class _LogInViewState extends State<LogInView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   "SpendWise",
-        //   style: TextStyle(color: Colors.white),
-        // ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 30,
-            ),
-          )
-        ],
-        backgroundColor: const Color(0xFF252634),
+        backgroundColor: TColor.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
       ),
-      backgroundColor: const Color(0xFF252634),
+      backgroundColor: TColor.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                   key: _formKey,
                   child: Column(children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 250,
                       child: Text(
-                        "Create new Account",
+                        "Login to your Acount",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: TColor.primary,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
@@ -91,7 +87,7 @@ class _LogInViewState extends State<LogInView> {
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: buildInputDecoration("Email", Icons.email),
                       validator: appValidators.validateEmail,
@@ -102,7 +98,7 @@ class _LogInViewState extends State<LogInView> {
                     TextFormField(
                       controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: true,
                       decoration:
@@ -131,11 +127,17 @@ class _LogInViewState extends State<LogInView> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Row(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(TColor.primary)),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.g_mobiledata),
-                    Text('Log in with Google'),
+                    Icon(Icons.g_mobiledata, color: TColor.white),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text('Log in with Google',
+                        style: TextStyle(color: TColor.white)),
                   ],
                 ),
               ),
@@ -148,18 +150,18 @@ class _LogInViewState extends State<LogInView> {
               children: [
                 const Text(
                   "Don't have an account?",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SignUpView()));
                     },
-                    child: const Text(
+                    child: Text(
                       "Sign Up",
-                      style: TextStyle(color: Colors.amber),
+                      style: TextStyle(color: TColor.primary),
                     ))
               ],
             )

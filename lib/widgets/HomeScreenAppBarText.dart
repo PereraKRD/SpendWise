@@ -1,14 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HomeCreenAppBarText extends StatelessWidget {
+class HomeCreenAppBarText extends StatefulWidget {
   const HomeCreenAppBarText({super.key, required this.userId});
   final String userId;
 
   @override
+  State<HomeCreenAppBarText> createState() => _HomeCreenAppBarTextState();
+}
+
+class _HomeCreenAppBarTextState extends State<HomeCreenAppBarText> {
+  @override
   Widget build(BuildContext context) {
-    final Stream<DocumentSnapshot> _usersStream =
-        FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+    final Stream<DocumentSnapshot> _usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .snapshots();
     return StreamBuilder<DocumentSnapshot>(
       stream: _usersStream,
       builder:
@@ -34,7 +41,7 @@ class HomeCreenAppBarText extends StatelessWidget {
   }
 }
 
-class AppBarTextCard extends StatelessWidget {
+class AppBarTextCard extends StatefulWidget {
   const AppBarTextCard({
     super.key,
     required this.data,
@@ -42,11 +49,16 @@ class AppBarTextCard extends StatelessWidget {
   final Map data;
 
   @override
+  State<AppBarTextCard> createState() => _AppBarTextCardState();
+}
+
+class _AppBarTextCardState extends State<AppBarTextCard> {
+  @override
   Widget build(BuildContext context) {
     return Text(
-      "Hello ${data['username']},",
+      "Hello ${widget.data['username']},",
       style: TextStyle(
-          color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+          color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
     );
   }
 }

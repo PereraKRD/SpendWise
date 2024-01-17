@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise/common/color_extension.dart';
 
 InputDecoration buildInputDecoration(String label, IconData suffixIcon) {
   return InputDecoration(
-    fillColor: const Color(0xAA494A59),
+    fillColor: TColor.white,
     filled: true,
     enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: Color(0x35949494),
       ),
     ),
-    focusedBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.white),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: TColor.primary.withOpacity(0.5)),
     ),
     icon: Icon(
       suffixIcon,
-      color: const Color(0xFF949494),
+      color: TColor.primary.withOpacity(0.7),
     ),
-    labelStyle: const TextStyle(
-      color: Color(0xFF949494),
+    labelStyle: TextStyle(
+      color: TColor.primary.withOpacity(0.5),
     ),
     labelText: label,
     border: const OutlineInputBorder(

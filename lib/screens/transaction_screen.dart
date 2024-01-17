@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/widgets/Category_List.dart';
 import 'package:spendwise/widgets/tab_bar_view.dart';
 import 'package:spendwise/widgets/time_line_month.dart';
@@ -28,11 +29,16 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: TColor.primary,
           title: Text(
             'Transactions',
             style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
+                fontSize: 22, fontWeight: FontWeight.w700, color: TColor.white),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
             ),
           ),
         ),

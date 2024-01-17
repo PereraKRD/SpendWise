@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/constants.dart';
 import 'package:spendwise/log_in.dart';
 import 'package:spendwise/services/auth_service.dart';
@@ -21,7 +22,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   final _passwordController = TextEditingController();
 
-  final _phoneController = TextEditingController();
+  final _BudgetController = TextEditingController();
 
   var authService = AuthService();
   var isLoader = false;
@@ -35,8 +36,8 @@ class _SignUpViewState extends State<SignUpView> {
         'username': _usernameController.text,
         'email': _emailController.text,
         'password': _passwordController.text,
-        'phone': _phoneController.text,
-        'remainingAmount': 0,
+        'budget': int.parse(_BudgetController.text),
+        'remainingAmount': int.parse(_BudgetController.text),
         'totalExpenses': 0,
         'totalIncomes': 0,
       };
@@ -57,39 +58,34 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   "SpendWise",
-        //   style: TextStyle(color: Colors.white),
-        // ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
-              size: 30,
-            ),
-          )
-        ],
-        backgroundColor: const Color(0xFF252634),
+        backgroundColor: TColor.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
       ),
-      backgroundColor: const Color(0xFF252634),
+      backgroundColor: TColor.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 250,
                       child: Text(
                         "Create new Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: TColor.primary,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
@@ -101,7 +97,7 @@ class _SignUpViewState extends State<SignUpView> {
                     TextFormField(
                       controller: _usernameController,
                       keyboardType: TextInputType.name,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: TColor.primary),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration:
                           buildInputDecoration("Username", Icons.person),
@@ -113,7 +109,7 @@ class _SignUpViewState extends State<SignUpView> {
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: TColor.primary),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: buildInputDecoration("Email", Icons.email),
                       validator: appValidators.validateEmail,
@@ -124,7 +120,7 @@ class _SignUpViewState extends State<SignUpView> {
                     TextFormField(
                       controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: TColor.primary),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: true,
                       decoration:
@@ -136,13 +132,13 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                     // for the telephone number
                     TextFormField(
-                      controller: _phoneController,
+                      controller: _BudgetController,
                       keyboardType: TextInputType.phone,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: TColor.primary),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration:
-                          buildInputDecoration("Phone Number", Icons.phone),
-                      validator: appValidators.validatePhone,
+                          buildInputDecoration("Budget", Icons.monetization_on),
+                      validator: appValidators.validateBudget,
                     ),
                     const SizedBox(
                       height: 20,
@@ -153,8 +149,9 @@ class _SignUpViewState extends State<SignUpView> {
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.amber)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.amber),
+                        ),
                         onPressed: () {
                           isLoader ? print("Loading") : _submitForm();
                         },
@@ -174,11 +171,14 @@ class _SignUpViewState extends State<SignUpView> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 onPressed: () {},
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(TColor.primary)),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.g_mobiledata),
-                    Text('Sign Up with Google'),
+                    Icon(Icons.g_mobiledata, color: Colors.white),
+                    Text('Sign Up with Google',
+                        style: TextStyle(color: Colors.white)),
                   ],
                 ),
               ),
@@ -187,21 +187,21 @@ class _SignUpViewState extends State<SignUpView> {
               height: 10,
             ),
             //sign in anonymously
-            Container(
-              height: 50,
-              width: 300,
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.person),
-                    Text('Sign Up Anonymously'),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   height: 50,
+            //   width: 300,
+            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //   child: ElevatedButton(
+            //     onPressed: () {},
+            //     child: const Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Icon(Icons.person),
+            //         Text('Sign Up Anonymously'),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             const SizedBox(
               height: 30,
             ),
@@ -210,19 +210,19 @@ class _SignUpViewState extends State<SignUpView> {
               children: [
                 const Text(
                   "Already have an account?",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const LogInView()),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Login",
-                      style: TextStyle(color: Colors.amber),
+                      style: TextStyle(color: TColor.primary),
                     ))
               ],
             )

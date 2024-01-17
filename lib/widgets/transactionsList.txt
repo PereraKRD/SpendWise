@@ -200,6 +200,113 @@ class TransactionList extends StatelessWidget {
 
 
 
+To refresh the transaction screen after deleting a transaction, you can use a callback mechanism to notify the parent widget (`TransactionScreen`) about the deletion, and then trigger a rebuild of the widget.
+
+Here's how you can implement it:
+
+1. **Modify `TranscationListForTab` to accept a callback:**
+
+```dart
+class TranscationListForTab extends StatefulWidget {
+  final String category;
+  final String type;
+  final String monthYear;
+  final VoidCallback onTransactionDeleted; // New callback
+
+  TranscationListForTab({
+    Key? key,
+    required this.category,
+    required this.type,
+    required this.monthYear,
+    required this.onTransactionDeleted, // Pass the callback as a parameter
+  }) : super(key: key);
+
+  @override
+  State<TranscationListForTab> createState() => _TranscationListForTabState();
+}
+```
+
+2. **Modify `_TranscationListForTabState` to call the callback after deleting a transaction:**
+
+```dart
+class _TranscationListForTabState extends State<TranscationListForTab> {
+  // Existing code...
+
+  Future<void> deleteTransaction() async {
+    // ... existing code for deleting transaction
+
+    // Call the callback to notify the parent widget about the deletion
+    widget.onTransactionDeleted();
+  }
+}
+```
+
+3. **Modify `Tabbar_View` to handle the callback and trigger a rebuild of `TransactionScreen`:**
+
+```dart
+class Tabbar_View extends StatefulWidget {
+  final String category;
+  final String monthYear;
+
+  Tabbar_View({
+    Key? key,
+    required this.category,
+    required this.monthYear,
+  }) : super(key: key);
+
+  @override
+  State<Tabbar_View> createState() => _Tabbar_ViewState();
+}
+
+class _Tabbar_ViewState extends State<Tabbar_View> {
+  // Existing code...
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            // ... existing code ...
+
+            TabBarView(
+              children: [
+                TranscationListForTab(
+                  category: widget.category,
+                  type: 'Expense',
+                  monthYear: widget.monthYear,
+                  onTransactionDeleted: () {
+                    // Callback function triggered on transaction deletion
+                    // Refresh the screen by triggering a rebuild
+                    setState(() {});
+                  },
+                ),
+                TranscationListForTab(
+                  category: widget.category,
+                  type: 'Income',
+                  monthYear: widget.monthYear,
+                  onTransactionDeleted: () {
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+In this modified code:
+
+- The `TranscationListForTab` widget now has a `VoidCallback` parameter named `onTransactionDeleted`.
+- Inside `_TranscationListForTabState`, after successfully deleting a transaction, the `onTransactionDeleted` callback is called.
+- In `Tabbar_View`, each instance of `TranscationListForTab` is provided with its own callback. When a transaction is deleted, the `setState` method is called in the callback, which triggers a rebuild of the `Tabbar_View` widget and, consequently, the `TransactionScreen`.
+
+This way, when a transaction is deleted, the screen will be refreshed, and the updated data will be displayed. Adjust the code based on your specific requirements.
 
 
 

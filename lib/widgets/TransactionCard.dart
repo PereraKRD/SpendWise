@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:spendwise/utils/icons_list.dart';
 import 'package:spendwise/widgets/TransacctionList.dart';
 import '../common/color_extension.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends StatefulWidget {
   TransactionCard({super.key});
 
+  @override
+  State<TransactionCard> createState() => _TransactionCardState();
+}
+
+class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,11 +44,16 @@ class TransactionCard extends StatelessWidget {
   }
 }
 
-class RecentTransactions extends StatelessWidget {
+class RecentTransactions extends StatefulWidget {
   RecentTransactions({
     super.key,
   });
 
+  @override
+  State<RecentTransactions> createState() => _RecentTransactionsState();
+}
+
+class _RecentTransactionsState extends State<RecentTransactions> {
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
@@ -62,7 +70,7 @@ class RecentTransactions extends StatelessWidget {
         if (snapshot.hasError) {
           return Text('Something went wrong');
         } else if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
-          return Text('Document does not exist');
+          return Center(child: Text('No Transaction Found'));
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
@@ -75,6 +83,7 @@ class RecentTransactions extends StatelessWidget {
               var cardData = data[index];
               return TransactionList(
                 data: cardData,
+                userId: userId,
               );
             });
       },
