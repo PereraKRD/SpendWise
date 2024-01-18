@@ -157,7 +157,7 @@ class _ProfileCardState extends State<ProfileCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LottieBuilder.network(
-              "https://lottie.host/7955ad19-bd4e-43c1-9882-424ae363914f/70fROPzaaw.json",
+              "https://lottie.host/0cfa1d2b-a3b7-4a40-bf27-d35b79d44a92/BldlBKcksB.json",
             ),
             // Image.asset(
             //   "assets/img/u1.png",

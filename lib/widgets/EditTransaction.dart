@@ -61,7 +61,7 @@ class _editTransactionFormState extends State<editTransactionForm> {
       // Retrieve existing transaction data
       final transactionDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.uid)
+          .doc(user.uid)
           .collection('transactions')
           .doc(widget.data['id'])
           .get();
