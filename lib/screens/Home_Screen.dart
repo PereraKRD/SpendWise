@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: isLogoutLoader
                   ? CircularProgressIndicator()
                   : Icon(
-                      Icons.power_settings_new,
+                      Icons.logout,
                       color: TColor.white,
                       size: 30,
                     ),
