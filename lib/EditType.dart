@@ -58,19 +58,19 @@ class _editTypeFormState extends State<editTypeForm> {
           .get();
 
       // Calculate the difference in amount for updating user statistics
-      int Amount = transactionDoc['amount'];
+      int amount = transactionDoc['amount'];
       int remainingAmount = userDoc['remainingAmount'];
       int totalExpenses = userDoc['totalExpenses'];
       int totalIncomes = userDoc['totalIncomes'];
 
       if (transactionDoc['type'] == 'Expense') {
-        totalExpenses = totalExpenses - Amount;
-        totalIncomes = totalIncomes + Amount;
-        remainingAmount = remainingAmount + Amount;
+        totalExpenses = totalExpenses - amount;
+        totalIncomes = totalIncomes + amount;
+        remainingAmount = remainingAmount + amount;
       } else {
-        totalIncomes = totalIncomes - Amount;
-        totalExpenses = totalExpenses + Amount;
-        remainingAmount = remainingAmount - Amount;
+        totalIncomes = totalIncomes - amount;
+        totalExpenses = totalExpenses + amount;
+        remainingAmount = remainingAmount - amount;
       }
 
       await FirebaseFirestore.instance

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:spendwise/common/color_extension.dart';
 
 class ProfileUserData extends StatefulWidget {
@@ -155,11 +156,14 @@ class _ProfileCardState extends State<ProfileCard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/img/u1.png",
-              width: 70,
-              height: 70,
-            )
+            LottieBuilder.network(
+              "https://lottie.host/7955ad19-bd4e-43c1-9882-424ae363914f/70fROPzaaw.json",
+            ),
+            // Image.asset(
+            //   "assets/img/u1.png",
+            //   width: 70,
+            //   height: 70,
+            // )
           ],
         ),
         const SizedBox(
