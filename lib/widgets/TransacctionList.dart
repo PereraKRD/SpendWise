@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:spendwise/EditType.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/utils/icons_list.dart';
-import 'package:spendwise/widgets/edit_transaction.dart';
+import 'package:spendwise/widgets/EditTransaction.dart';
 
 class TransactionList extends StatefulWidget {
   TransactionList({

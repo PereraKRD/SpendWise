@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/services/auth_service.dart';
-import 'package:spendwise/validators.dart';
-import 'package:spendwise/widgets/category_dropdown.dart';
+import 'package:spendwise/Validators.dart';
+import 'package:spendwise/widgets/CategoryDropdown.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
-import 'package:spendwise/constants.dart';
-import 'package:spendwise/log_in.dart';
-import 'package:spendwise/services/auth_service.dart';
-import 'package:spendwise/validators.dart';
+import 'package:spendwise/Constants.dart';
+import 'package:spendwise/LogIn.dart';
+import 'package:spendwise/services/Auth_Service.dart';
+import 'package:spendwise/Validators.dart';
 
 // ignore: must_be_immutable
 class SignUpView extends StatefulWidget {

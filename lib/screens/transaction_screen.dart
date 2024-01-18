@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spendwise/common/color_extension.dart';
-import 'package:spendwise/widgets/Category_List.dart';
-import 'package:spendwise/widgets/tab_bar_view.dart';
-import 'package:spendwise/widgets/time_line_month.dart';
+import 'package:spendwise/widgets/CategoryList.dart';
+import 'package:spendwise/widgets/TabBarView.dart';
+import 'package:spendwise/widgets/TimeLineMonth.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key});

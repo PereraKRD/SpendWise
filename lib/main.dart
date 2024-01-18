@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/firebase_options.dart';
-import 'package:spendwise/widgets/auth_gate.dart';
+import 'package:spendwise/widgets/AuthGate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

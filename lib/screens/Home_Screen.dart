@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/services/auth_service.dart';
-import 'package:spendwise/sign_up.dart';
+import 'package:spendwise/SignUp.dart';
 import 'package:spendwise/widgets/HeroCard.dart';
 import 'package:spendwise/widgets/HomeScreenAppBarText.dart';
-import 'package:spendwise/widgets/add_transaction.dart';
+import 'package:spendwise/widgets/AddTransaction.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});

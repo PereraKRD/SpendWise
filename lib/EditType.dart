@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/services/auth_service.dart';
-import 'package:spendwise/validators.dart';
+import 'package:spendwise/Validators.dart';
 import 'package:uuid/uuid.dart';
 
 class editTypeForm extends StatefulWidget {

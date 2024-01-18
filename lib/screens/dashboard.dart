@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spendwise/screens/home_Screen.dart';
-import 'package:spendwise/screens/profile_Screen.dart';
+import 'package:spendwise/screens/Home_Screen.dart';
+import 'package:spendwise/screens/Profile_Screen.dart';
 import 'package:spendwise/screens/transaction_screen.dart';
 import 'package:spendwise/widgets/bottomNavBar.dart';
 

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/common_widgets/IconItemRow.dart';
 import 'package:spendwise/services/auth_service.dart';
-import 'package:spendwise/sign_up.dart';
-import 'package:spendwise/widgets/profileuserdata.dart';
+import 'package:spendwise/SignUp.dart';
+import 'package:spendwise/widgets/ProfileUserData.dart';
 
 class Profile_Page extends StatefulWidget {
   const Profile_Page({super.key});

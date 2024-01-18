@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:spendwise/log_in.dart';
-import 'package:spendwise/screens/dashboard.dart';
+import 'package:spendwise/LogIn.dart';
+import 'package:spendwise/screens/Dashboard.dart';
 import 'package:spendwise/services/db.dart';
 
 class AuthService {
