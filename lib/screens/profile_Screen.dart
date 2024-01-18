@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/common_widgets/IconItemRow.dart';
-import 'package:spendwise/log_in.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/sign_up.dart';
 import 'package:spendwise/widgets/profileuserdata.dart';

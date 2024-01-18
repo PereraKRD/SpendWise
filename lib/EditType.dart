@@ -5,39 +5,31 @@ import 'package:intl/intl.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/services/auth_service.dart';
 import 'package:spendwise/validators.dart';
-import 'package:spendwise/widgets/category_dropdown.dart';
 import 'package:uuid/uuid.dart';
 
-class editTransactionForm extends StatefulWidget {
-  const editTransactionForm({super.key, this.data, required this.userId});
+class editTypeForm extends StatefulWidget {
+  const editTypeForm({super.key, this.data, required this.userId});
   final dynamic data;
   final String userId;
 
   @override
-  State<editTransactionForm> createState() => _editTransactionFormState();
+  State<editTypeForm> createState() => _editTypeFormState();
 }
 
-class _editTransactionFormState extends State<editTransactionForm> {
+class _editTypeFormState extends State<editTypeForm> {
   final _formkey = GlobalKey<FormState>();
 
   var isLoader = false;
   var authService = AuthService();
   var appValidator = AppValidators();
-  late TextEditingController amountEditingController;
-  late TextEditingController titleEditingController;
   late String type;
-  late String category;
 
   var uid = Uuid();
 
   @override
   void initState() {
     super.initState();
-    amountEditingController =
-        TextEditingController(text: widget.data['amount'].toString());
-    titleEditingController = TextEditingController(text: widget.data['title']);
     type = widget.data['type'];
-    category = widget.data['category'];
   }
 
   Future<void> _submitEditTransactionForm() async {
@@ -48,7 +40,6 @@ class _editTransactionFormState extends State<editTransactionForm> {
 
       final user = FirebaseAuth.instance.currentUser;
       int timestamp = DateTime.now().millisecondsSinceEpoch;
-      var amount = int.parse(amountEditingController.text);
       DateTime date = DateTime.now();
 
       String monthyear = DateFormat('MMM y').format(date);
@@ -67,20 +58,19 @@ class _editTransactionFormState extends State<editTransactionForm> {
           .get();
 
       // Calculate the difference in amount for updating user statistics
-      int oldAmount = transactionDoc['amount'];
-      int newAmount = int.parse(amountEditingController.text.trim());
+      int Amount = transactionDoc['amount'];
       int remainingAmount = userDoc['remainingAmount'];
       int totalExpenses = userDoc['totalExpenses'];
       int totalIncomes = userDoc['totalIncomes'];
 
       if (transactionDoc['type'] == 'Expense') {
-        totalExpenses -= oldAmount;
-        totalExpenses += newAmount;
-        remainingAmount += oldAmount - newAmount;
+        totalExpenses = totalExpenses - Amount;
+        totalIncomes = totalIncomes + Amount;
+        remainingAmount = remainingAmount + Amount;
       } else {
-        totalIncomes -= oldAmount;
-        totalIncomes += newAmount;
-        remainingAmount = remainingAmount - oldAmount + newAmount;
+        totalIncomes = totalIncomes - Amount;
+        totalExpenses = totalExpenses + Amount;
+        remainingAmount = remainingAmount - Amount;
       }
 
       await FirebaseFirestore.instance
@@ -95,10 +85,7 @@ class _editTransactionFormState extends State<editTransactionForm> {
 
       // Update the transaction data in Firestore
       var updatedData = {
-        'title': titleEditingController.text,
-        'amount': amount,
         'type': type,
-        'category': category,
         'monthyear': monthyear,
         'createdAt': timestamp,
         'totalExpenses': totalExpenses,
@@ -127,33 +114,6 @@ class _editTransactionFormState extends State<editTransactionForm> {
         key: _formkey,
         child: Column(
           children: [
-            TextFormField(
-              controller: titleEditingController,
-              validator: appValidator.emptyCheck,
-              keyboardType: TextInputType.text,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              decoration: const InputDecoration(labelText: 'Title'),
-            ),
-            TextFormField(
-              controller: amountEditingController,
-              validator: appValidator.emptyCheck,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Amount'),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            CategoryDropDown(
-              cattype: category,
-              onChanged: (String? value) {
-                if (value != null) {
-                  setState(() {
-                    category = value;
-                  });
-                }
-              },
-            ),
             SizedBox(
               width: 5,
             ),

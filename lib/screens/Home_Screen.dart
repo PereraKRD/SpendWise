@@ -44,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text('Confirm Delete'),
-          content: Text('Are you sure you want to delete this transaction?'),
+          title: Text('Confirm Sign Out'),
+          content: Text('Are you sure you want to Sign Out?'),
           actions: <Widget>[
             CupertinoDialogAction(
               onPressed: () async {
