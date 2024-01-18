@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/Constants.dart';
 import 'package:spendwise/services/auth_service.dart';
@@ -56,33 +57,29 @@ class _LogInViewState extends State<LogInView> {
             bottomRight: Radius.circular(30.0),
           ),
         ),
+        title: Text(
+          'Login',
+          style: TextStyle(
+              fontSize: 22, fontWeight: FontWeight.w700, color: TColor.white),
+        ),
       ),
       backgroundColor: TColor.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                   key: _formKey,
                   child: Column(children: [
-                    SizedBox(
-                      width: 250,
-                      child: Text(
-                        "Login to your Acount",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: TColor.primary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                     const SizedBox(
                       height: 50,
+                    ),
+                    LottieBuilder.network(
+                      "https://lottie.host/0cfa1d2b-a3b7-4a40-bf27-d35b79d44a92/BldlBKcksB.json",
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     TextFormField(
                       controller: _emailController,
@@ -117,31 +114,31 @@ class _LogInViewState extends State<LogInView> {
                                 backgroundColor:
                                     MaterialStateProperty.all(Colors.amber)),
                             onPressed: _submitForm,
-                            child: const Text('Log In'))),
+                            child: const Text('Login'))),
                   ])),
             ),
             //google sign in
-            Container(
-              height: 50,
-              width: 300,
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(TColor.primary)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.g_mobiledata, color: TColor.white),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text('Log in with Google',
-                        style: TextStyle(color: TColor.white)),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   height: 50,
+            //   width: 300,
+            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //   child: ElevatedButton(
+            //     onPressed: () {},
+            //     style: ButtonStyle(
+            //         backgroundColor: MaterialStateProperty.all(TColor.primary)),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Icon(Icons.g_mobiledata, color: TColor.white),
+            //         const SizedBox(
+            //           width: 10,
+            //         ),
+            //         Text('Log in with Google',
+            //             style: TextStyle(color: TColor.white)),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             const SizedBox(
               height: 30,
             ),

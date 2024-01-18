@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/Constants.dart';
 import 'package:spendwise/LogIn.dart';
@@ -65,6 +66,11 @@ class _SignUpViewState extends State<SignUpView> {
             bottomRight: Radius.circular(30.0),
           ),
         ),
+        title: Text(
+          'Sign Up',
+          style: TextStyle(
+              fontSize: 22, fontWeight: FontWeight.w700, color: TColor.white),
+        ),
       ),
       backgroundColor: TColor.white,
       body: SingleChildScrollView(
@@ -79,18 +85,10 @@ class _SignUpViewState extends State<SignUpView> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    SizedBox(
-                      width: 250,
-                      child: Text(
-                        "Create new Account",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: TColor.primary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    LottieBuilder.network(
+                      "https://lottie.host/0cfa1d2b-a3b7-4a40-bf27-d35b79d44a92/BldlBKcksB.json",
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -165,27 +163,27 @@ class _SignUpViewState extends State<SignUpView> {
               ),
             ),
             //google sign in
-            Container(
-              height: 50,
-              width: 300,
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(TColor.primary)),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.g_mobiledata, color: Colors.white),
-                    Text('Sign Up with Google',
-                        style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            // Container(
+            //   height: 50,
+            //   width: 300,
+            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //   child: ElevatedButton(
+            //     onPressed: () {},
+            //     style: ButtonStyle(
+            //         backgroundColor: MaterialStateProperty.all(TColor.primary)),
+            //     child: const Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Icon(Icons.g_mobiledata, color: Colors.white),
+            //         Text('Sign Up with Google',
+            //             style: TextStyle(color: Colors.white)),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             //sign in anonymously
             // Container(
             //   height: 50,
