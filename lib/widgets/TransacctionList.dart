@@ -76,15 +76,17 @@ class _TransactionListState extends State<TransactionList> {
       child: CupertinoContextMenu.builder(
         actions: <Widget>[
           CupertinoContextMenuAction(
-            onPressed: () {
-              _dialoBuilder(context);
+            onPressed: () async {
+              await _dialoBuilder(context);
+              Navigator.pop(context);
             },
             trailingIcon: CupertinoIcons.pencil,
             child: const Text('Edit Amount'),
           ),
           CupertinoContextMenuAction(
-            onPressed: () {
-              _dialoBuilder2(context);
+            onPressed: () async {
+              await _dialoBuilder2(context);
+              Navigator.pop(context);
             },
             trailingIcon: CupertinoIcons.pencil,
             child: const Text('Edit Type'),

@@ -146,8 +146,8 @@ class _editTypeFormState extends State<editTypeForm> {
               ),
               onPressed: () {
                 if (isLoader == false) {
-                  _submitEditTransactionForm();
                   Navigator.pop(context);
+                  _submitEditTransactionForm();
                 }
               },
               child: isLoader
