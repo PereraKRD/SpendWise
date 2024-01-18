@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:spendwise/common/color_extension.dart';
 import 'package:spendwise/Constants.dart';
 import 'package:spendwise/services/auth_service.dart';
@@ -57,29 +56,33 @@ class _LogInViewState extends State<LogInView> {
             bottomRight: Radius.circular(30.0),
           ),
         ),
-        title: Text(
-          'Login',
-          style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w700, color: TColor.white),
-        ),
       ),
       backgroundColor: TColor.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                   key: _formKey,
                   child: Column(children: [
+                    SizedBox(
+                      width: 250,
+                      child: Text(
+                        "Login to your Acount",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: TColor.primary,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 50,
-                    ),
-                    LottieBuilder.network(
-                      "https://lottie.host/0cfa1d2b-a3b7-4a40-bf27-d35b79d44a92/BldlBKcksB.json",
-                    ),
-                    const SizedBox(
-                      height: 30,
                     ),
                     TextFormField(
                       controller: _emailController,
@@ -114,7 +117,7 @@ class _LogInViewState extends State<LogInView> {
                                 backgroundColor:
                                     MaterialStateProperty.all(Colors.amber)),
                             onPressed: _submitForm,
-                            child: const Text('Login'))),
+                            child: const Text('Log In'))),
                   ])),
             ),
             //google sign in
